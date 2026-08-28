@@ -1,34 +1,49 @@
 # Week 3 QA Documentation — JanSeva Digital Service Platform
 
-This directory contains the Week 3 Quality Assurance and Testing Strategy artifacts for the JanSeva Digital Service Platform (JSDSP).
+This directory contains the Quality Assurance and Testing Strategy artifacts for Week 3 of the Junior Web Developer – E-Governance & Digital Services internship task.
 
-## Scope
-- Quality assurance planning for the Income Certificate demonstration journey
-- Functional test-case design for citizen and officer workflows
-- Requirement-to-test traceability
-- Manual versus automated testing strategy
-- Performance, stress, security, and accessibility testing plans
-- QA risk management and defect management
-- Test execution status for the current prototype
+## QA objective
+Establish a practical, traceable and repeatable approach for checking the JanSeva citizen-service journey before release, with the Income Certificate journey used as the representative service.
 
-## Current implementation status
-The repository currently contains a self-contained HTML5/CSS3/JavaScript prototype. It does not contain a production backend, real government identity provider, payment gateway, database, workflow engine, or staging environment.
+## What is covered
+- Functional test planning
+- Unit, integration, system and UAT/E2E test levels
+- Ten detailed test scenarios (TC-01–TC-10)
+- Requirement-to-test traceability for FR-01–FR-14
+- Manual versus automated execution strategy
+- Responsive and accessibility review
+- Performance, stress, soak and spike test planning
+- Security and role/permission test planning
+- QA risk register
+- Defect lifecycle and release-blocking rules
+- Test metrics and exit criteria
 
-Therefore, this documentation distinguishes carefully between:
-- **Executed / reviewable now:** checks that can be assessed against the current prototype.
-- **Planned:** tests that require a deployed interactive build, backend, staging environment, or real third-party integration.
-
-No backend, security, performance, or accessibility result is presented as passed unless it can be supported by the current prototype evidence.
-
-## Week 3 artifacts
-| File | Purpose |
+## Artifact index
+| Artifact | Purpose |
 |---|---|
-| `test-plan.md` | Overall QA strategy, test levels, environments, data, and entry/exit criteria |
-| `test-cases.md` | Ten detailed test-case scenarios (TC-01–TC-10) |
-| `requirement-traceability.md` | Mapping of in-scope Week 1 requirements to Week 3 tests; deferred items are identified |
-| `test-execution-summary.md` | Prototype-review results and tests that remain planned |
-| `risk-register.md` | QA-specific risks and mitigations |
-| `defect-management.md` | Severity, lifecycle, release-blocking rules, and evidence requirements |
+| [`test-plan.md`](test-plan.md) | Overall QA strategy, scope, environments, data, entry/exit criteria and automation approach |
+| [`test-cases.md`](test-cases.md) | Ten detailed scenarios with preconditions, steps, expected outcomes, priority and execution status |
+| [`requirement-traceability.md`](requirement-traceability.md) | Maps Week 1 requirements to Week 3 test coverage and identifies Week 4 carry-forward items |
+| [`test-execution-summary.md`](test-execution-summary.md) | Conservative record of prototype-review observations versus infrastructure-dependent planned tests |
+| [`risk-register.md`](risk-register.md) | QA risks, likelihood, impact and mitigation controls |
+| [`defect-management.md`](defect-management.md) | Severity definitions, evidence requirements, lifecycle and release rules |
+| [`.github/workflows/qa.yml`](../.github/workflows/qa.yml) | Lightweight CI smoke checks for repository integrity and required QA artifacts |
+
+## Current implementation boundary
+The repository is a self-contained HTML5/CSS3/JavaScript prototype. It does not provide a production backend, database, real identity provider, payment gateway, notification service, workflow engine or staging environment.
+
+Consequently, this repository does **not** claim completed backend, payment, penetration, load, screen-reader or full automated regression results. Where execution depends on missing infrastructure, the artifact is explicitly marked **Planned**.
+
+## Prototype-review evidence policy
+A prototype review can establish that a UI characteristic is represented in the source, but it cannot prove production behaviour such as persistent storage, authorization enforcement, payment settlement, notification delivery or uptime. Those are carried forward to the implementation stage where they can be executed properly.
 
 ## Week 4 carry-forward
-FR-11 (Reporting), FR-12 (Integration), FR-14 (Assisted Service), and the full automated regression suite are carried forward for the next implementation phase.
+- FR-11 Reporting
+- FR-12 Integration
+- FR-14 Assisted Service
+- Backend/database integration
+- Live identity and payment integrations
+- Full E2E/regression execution
+- Staging load/stress/soak/spike testing
+- Security scanning and penetration testing in an approved test environment
+- Interactive keyboard and screen-reader validation
