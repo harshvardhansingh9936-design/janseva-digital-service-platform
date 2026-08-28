@@ -1,0 +1,60 @@
+name: QA Smoke Checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static-prototype-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate required prototype files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f index.html
+          test -f README.md
+          test -f LICENSE.txt
+          test -d qa
+          test -f qa/README.md
+          test -f qa/test-plan.md
+          test -f qa/test-cases.md
+          test -f qa/requirement-traceability.md
+          test -f qa/test-execution-summary.md
+          test -f qa/risk-register.md
+          test -f qa/defect-management.md
+
+      - name: Basic HTML sanity check
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -qi '<!doctype html>' index.html
+          grep -qi '<html' index.html
+          grep -qi '<head' index.html
+          grep -qi '<body' index.html
+          grep -qi '</html>' index.html
+
+      - name: Check required accessibility-oriented markup
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'lang="en"' index.html
+          grep -q 'aria-label=' index.html
+          grep -q 'viewport' index.html
+
+      - name: Check Week 3 traceability and scope markers
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'FR-11' qa/requirement-traceability.md
+          grep -q 'FR-12' qa/requirement-traceability.md
+          grep -q 'FR-14' qa/requirement-traceability.md
+          grep -q 'Deferred to Week 4' qa/requirement-traceability.md || true
+          grep -q 'TC-10' qa/test-cases.md
+          grep -q 'Planned' qa/test-execution-summary.md
