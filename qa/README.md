@@ -33,6 +33,7 @@ Establish a practical, traceable and repeatable approach for checking the JanSev
 | [`test-data.md`](test-data.md) | Synthetic test-data categories and privacy controls |
 | [`risk-register.md`](risk-register.md) | QA risks, likelihood, impact and mitigation controls |
 | [`defect-management.md`](defect-management.md) | Severity definitions, evidence requirements, lifecycle and release rules |
+| [`test-metrics.md`](test-metrics.md) | QA metrics, release gates and interpretation for the current prototype stage |
 | [`.github/workflows/qa.yml`](../.github/workflows/qa.yml) | Lightweight CI smoke checks for project integrity, HTML sanity, accessibility-oriented source markers and QA documentation links |
 
 ## Current implementation boundary
