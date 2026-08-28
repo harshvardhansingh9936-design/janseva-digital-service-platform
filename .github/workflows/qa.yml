@@ -1,0 +1,64 @@
+name: QA Smoke Checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static-prototype-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate required project and QA files
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in index.html README.md LICENSE.txt qa/README.md qa/test-plan.md qa/test-cases.md qa/requirement-traceability.md qa/test-execution-summary.md qa/risk-register.md qa/defect-management.md; do
+            test -f "$file"
+          done
+
+      - name: Basic HTML sanity check
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -qi '<!doctype html>' index.html
+          grep -qi '<html' index.html
+          grep -qi '<head' index.html
+          grep -qi '<body' index.html
+          grep -qi '</html>' index.html
+
+      - name: Check accessibility-oriented source markers
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'lang="en"' index.html
+          grep -q 'aria-label=' index.html
+          grep -q 'viewport' index.html
+
+      - name: Check Week 3 QA scope and traceability
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'FR-11' qa/requirement-traceability.md
+          grep -q 'FR-12' qa/requirement-traceability.md
+          grep -q 'FR-14' qa/requirement-traceability.md
+          grep -q 'Deferred to Week 4' qa/requirement-traceability.md
+          grep -q 'TC-10' qa/test-cases.md
+          grep -q 'Planned' qa/test-execution-summary.md
+
+      - name: Check documentation links
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q '(qa/README.md)' README.md
+          grep -q '(test-plan.md)' qa/README.md
+          grep -q '(test-cases.md)' qa/README.md
+          grep -q '(requirement-traceability.md)' qa/README.md
+          grep -q '(test-execution-summary.md)' qa/README.md
+          grep -q '(risk-register.md)' qa/README.md
+          grep -q '(defect-management.md)' qa/README.md
