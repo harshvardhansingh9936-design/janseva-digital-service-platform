@@ -1,4 +1,4 @@
-name: QA Smoke Checks
+name: QA and Audit Smoke Checks
 
 on:
   push:
@@ -14,11 +14,21 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Validate required project and QA files
+      - name: Validate required project, QA and audit files
         shell: bash
         run: |
           set -euo pipefail
-          for file in index.html README.md LICENSE.txt qa/README.md qa/test-plan.md qa/test-cases.md qa/requirement-traceability.md qa/test-execution-summary.md qa/risk-register.md qa/defect-management.md; do
+          files=(
+            index.html README.md LICENSE.txt
+            qa/README.md qa/test-plan.md qa/test-cases.md
+            qa/requirement-traceability.md qa/test-execution-summary.md
+            qa/risk-register.md qa/defect-management.md
+            audit/README.md audit/audit-summary.md audit/audit-execution-schedule.md
+            audit/performance-audit.md audit/accessibility-audit.md audit/security-audit.md
+            audit/cross-dimension-findings.md audit/improvement-plan.md
+            audit/scorecard.md audit/evidence-matrix.md audit/production-readiness-checklist.md
+          )
+          for file in "${files[@]}"; do
             test -f "$file"
           done
 
@@ -51,14 +61,34 @@ jobs:
           grep -q 'TC-10' qa/test-cases.md
           grep -q 'Planned' qa/test-execution-summary.md
 
+      - name: Check Week 4 audit scope and evidence boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'WCAG 2.2' audit/README.md
+          grep -q 'OWASP Top 10:2025' audit/README.md
+          grep -q 'audit-execution-schedule.md' audit/README.md
+          grep -q 'Do not claim completed live' audit/README.md || true
+          grep -q 'Planned Validation' audit/audit-execution-schedule.md
+          grep -q 'P0' audit/improvement-plan.md
+          grep -q 'P3' audit/improvement-plan.md
+
       - name: Check documentation links
         shell: bash
         run: |
           set -euo pipefail
           grep -q '(qa/README.md)' README.md
+          grep -q '(audit/)' README.md
           grep -q '(test-plan.md)' qa/README.md
           grep -q '(test-cases.md)' qa/README.md
           grep -q '(requirement-traceability.md)' qa/README.md
           grep -q '(test-execution-summary.md)' qa/README.md
           grep -q '(risk-register.md)' qa/README.md
           grep -q '(defect-management.md)' qa/README.md
+          grep -q '(audit-summary.md)' audit/README.md
+          grep -q '(audit-execution-schedule.md)' audit/README.md
+          grep -q '(performance-audit.md)' audit/README.md
+          grep -q '(accessibility-audit.md)' audit/README.md
+          grep -q '(security-audit.md)' audit/README.md
+          grep -q '(improvement-plan.md)' audit/README.md
+          grep -q '(production-readiness-checklist.md)' audit/README.md
