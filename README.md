@@ -36,8 +36,13 @@ The repository is a static prototype. It does not contain a production backend, 
 
 A lightweight GitHub Actions workflow (`.github/workflows/qa.yml`) performs repository-integrity, HTML-sanity and QA-artifact smoke checks on pushes and pull requests.
 
-### Week 4 carry-forward
-FR-11 Reporting, FR-12 Integration and FR-14 Assisted Service are intentionally deferred to Week 4, together with backend-dependent integration, full E2E/regression execution, staging performance testing and deployed-environment security testing.
+## Week 4 — Final Performance, Accessibility & Security Audit
+Week 4 adds the final audit package in [`audit/`](audit/). It covers performance KPIs and targets, WCAG 2.2-oriented accessibility review, OWASP-aligned security risks, cross-dimension findings, evidence mapping, a prioritized P0–P3 improvement plan, a qualitative scorecard and a production-readiness checklist.
+
+The audit deliberately distinguishes source/prototype evidence from runtime measurements and planned staging validation. It does not claim unperformed Lighthouse, load, penetration, backend, payment or assistive-technology test results.
+
+### Week 4 carry-forward and closure
+FR-11 Reporting, FR-12 Integration and FR-14 Assisted Service were identified in the earlier QA work as later implementation items. Week 4 documents the audit implications and the controls/validation required before those capabilities are treated as production-ready.
 
 ## Important
 This is an internship prototype and is not an official government service.
